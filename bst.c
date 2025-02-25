@@ -54,7 +54,7 @@ struct bst {
 struct bst* bst_create() {
   struct bst* new_bst = malloc(sizeof(struct bst));
   if (new_bst == NULL) {
-        return NULL;  // If malloc fails, return NULL
+        return NULL;  // when malloc fails, return NULL
     }
   new_bst->root = NULL;
   return new_bst;
@@ -216,7 +216,7 @@ void bst_remove(struct bst* bst, int key) {
 
 if (current == NULL) return; // Node to remove not found
 
-    // Case 1: Node has no children (leaf node)
+    // The 1st: Node has no children (leaf node)
     if (current->left == NULL && current->right == NULL) {
         if (parent == NULL) {
             bst->root = NULL; // Tree is now empty
@@ -227,7 +227,7 @@ if (current == NULL) return; // Node to remove not found
         }
         free(current);
     }
-    // Case 2: Node has one child
+    // The case 2: Node has one child
     else if (current->left == NULL || current->right == NULL) {
         struct bst_node* child = (current->left != NULL) ? current->left : current->right;
 
@@ -240,23 +240,23 @@ if (current == NULL) return; // Node to remove not found
         }
         free(current);
     }
-    // Case 3: Node has two children
+    // The case 3: Node has two children
     else {
         // Find the in-order successor (smallest in the right subtree)
         successor = current->right;
-        struct bst_node* successor_parent = current; // To keep track of successor's parent
+        struct bst_node* successor_parent = current; // Used to keep track of successor's parent
 
         while (successor->left != NULL) {
             successor_parent = successor;
             successor = successor->left;
         }
 
-        // Copy successor's data to current node
+        // Copy the successor's data to current node
         current->key = successor->key;
         current->value = successor->value;
 
         // Remove the successor node
-        // If successor has no right child, simply adjust its parent's link
+        // If successor has no right child, adjust its parent's link
         if (successor_parent->left == successor) {
             successor_parent->left = successor->right;
         } else {
@@ -291,7 +291,7 @@ void* bst_get(struct bst* bst, int key) {
    struct bst_node* current = bst->root;
     while (current != NULL) {
         if (key == current->key) {
-            return current->value; // Found the key, return its value
+            return current->value; // The key found return its value
         } else if (key < current->key) {
             current = current->left; // Move left
         } else {
